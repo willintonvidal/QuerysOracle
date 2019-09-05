@@ -83,9 +83,12 @@ PROCEDURE inicioSesion(
         usuario_contrasenia VARCHAR2,
         cursorInicioSesion OUT t_cursorIniciosesion)
   IS
+  contra_cifrada varchar(2000);
   BEGIN
+    contra_cifrada := UTL_RAW.CAST_TO_VARCHAR2(UTL_RAW.CAST_TO_RAW( QB_ENCRIPCION.FB_ENCRIPTAR(usuario_contrasenia)));
+    
     OPEN cursorInicioSesion FOR SELECT USU_ID,USU_NOMBRES,USU_APELLIDOS,USU_TIPO_USUARIO,USU_ESTADO,USU_EMAIL,USU_TELEFONO,USU_FOTO
-        FROM USUARIO WHERE USU_ID = usuario_id AND USU_CONTRASENIA = usuario_contrasenia;
+        FROM USUARIO WHERE USU_ID = usuario_id AND USU_CONTRASENIA = contra_cifrada;
     EXCEPTION
     WHEN NO_DATA_FOUND THEN
     cursorInicioSesion := null;
@@ -129,7 +132,9 @@ PROCEDURE inicioSesion(
         foto_usu VARCHAR2,
         ejecuto OUT NUMBER)
   IS
+    contra_cifrada varchar2(2000);
   BEGIN
+    contra_cifrada := UTL_RAW.CAST_TO_VARCHAR2(UTL_RAW.CAST_TO_RAW( QB_ENCRIPCION.FB_ENCRIPTAR(contrasenia_usu)));
     INSERT
     INTO usuario
       (
@@ -154,7 +159,7 @@ PROCEDURE inicioSesion(
         nombres_usu,
         apellidos_usu,
         tipo_usuario_usu,
-        contrasenia_usu,
+        contra_cifrada,
         estado_usu,
         email_usu,
         telefono_usu,
