@@ -12,6 +12,7 @@ IS
         acu_numero_ident NUMBER,
         grado_id         NUMBER,
         ejecuto OUT NUMBER);
+        
     PROCEDURE actualizar_estudiante(
         estudiante_id    NUMBER,
         acu_numero_ident NUMBER,

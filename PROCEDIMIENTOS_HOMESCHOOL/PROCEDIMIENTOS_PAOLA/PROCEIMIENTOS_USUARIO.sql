@@ -18,6 +18,10 @@ PROCEDURE validarUsuarios(
         usuario_id NUMBER,
         ejecuto OUT NUMBER);
         
+        PROCEDURE buscarRole(
+        usuario_id NUMBER,
+        tipo_role OUT VARCHAR2);
+        
     PROCEDURE insertarUsuario(
         id_usu NUMBER,
         edu_nit_cen VARCHAR2,
@@ -39,7 +43,6 @@ PROCEDURE validarUsuarios(
         nombres_usu VARCHAR2,
         apellidos_usu VARCHAR2,
         tipo_usuario_usu VARCHAR2,
-        contrasenia_usu VARCHAR2,
         estado_usu VARCHAR2,
         email_usu VARCHAR2,
         telefono_usu VARCHAR2,
@@ -115,7 +118,24 @@ PROCEDURE inicioSesion(
     RAISE_APPLICATION_ERROR(-20100, 'Error al vaidar al usuario '||SQLERRM);
   END validarUsuarios;
   
+  --------------------------------
+  -------BUSCAR ROLE--------------
+  --------------------------------
+  PROCEDURE buscarRole(
+        usuario_id NUMBER,
+        tipo_role OUT VARCHAR2)
+  IS
+  BEGIN
+      SELECT USU_TIPO_USUARIO INTO tipo_role FROM USUARIO WHERE USU_ID = usuario_id;
+    COMMIT;
+  EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+    tipo_role := '0';
+  END buscarRole;
   
+  --------------------------------
+  -------BUSCAR ROLE--------------
+  --------------------------------
 
   PROCEDURE insertarUsuario
   (
@@ -185,7 +205,6 @@ PROCEDURE inicioSesion(
         nombres_usu VARCHAR2,
         apellidos_usu VARCHAR2,
         tipo_usuario_usu VARCHAR2,
-        contrasenia_usu VARCHAR2,
         estado_usu VARCHAR2,
         email_usu VARCHAR2,
         telefono_usu VARCHAR2,
@@ -199,11 +218,10 @@ PROCEDURE inicioSesion(
       usu_nombres      = nombres_usu,
       usu_apellidos = apellidos_usu,
       usu_tipo_usuario= tipo_usuario_usu,
-      usu_contrasenia= contrasenia_usu,
       usu_estado= estado_usu,
-      usu_email =email_usu,
-      usu_telefono= telefono_usu,
-      usu_foto= foto_usu
+      usu_email = email_usu,
+      usu_telefono = telefono_usu,
+      usu_foto = foto_usu
     WHERE usu_id = id_usu;
     IF sql%rowcount > 0 THEN
       ejecuto  := 1;
@@ -269,6 +287,6 @@ END GestionarUsuario;
 DECLARE
 V varchar2(20);
 BEGIN
-  GESTIONARUSUARIO.VALIDARUSUARIOS(1061774,V);
+  GESTIONARUSUARIO.BUSCARROLE(1061767295,V);
   DBMS_OUTPUT.PUT_LINE(V);
 END;
