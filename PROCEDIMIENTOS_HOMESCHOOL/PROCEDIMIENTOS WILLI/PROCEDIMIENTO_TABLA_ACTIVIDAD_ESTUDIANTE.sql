@@ -8,7 +8,6 @@ IS
     PROCEDURE get_all_actividad_estudiant(
         cursorActividadEstudiante OUT t_cursor);
     PROCEDURE insertar_actividad_estudiante(
-        rel_act_est_id     NUMBER,
         estudiante_id      NUMBER,
         actividad_eva_id   NUMBER,
         tema_id            NUMBER,
@@ -38,7 +37,6 @@ AS
   END get_all_actividad_estudiant;
 --------------------
   PROCEDURE insertar_actividad_estudiante(
-      rel_act_est_id     NUMBER,
       estudiante_id      NUMBER,
       actividad_eva_id   NUMBER,
       tema_id            NUMBER,
@@ -59,7 +57,7 @@ AS
       )
       VALUES
       (
-        rel_act_est_id ,
+        Actividad_estudiante_id_Seq.NEXTVAL,
         estudiante_id ,
         actividad_eva_id ,
         tema_id ,

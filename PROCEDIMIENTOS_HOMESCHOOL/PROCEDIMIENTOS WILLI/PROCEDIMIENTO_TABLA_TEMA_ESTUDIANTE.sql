@@ -1,4 +1,4 @@
---EN LA TABLA TEMA_ESTUDIANTE EL TYPO DE VARIABE NUMBER NO TIENE TAMAÑO
+--EN LA TABLA TEMA_ESTUDIANTE EL TYPO DE VARIABE NUMBER NO TIENE TAMAï¿½O
 /*GESTION TEMA ESTUDIANTE*/
 CREATE OR REPLACE PACKAGE gestionar_tema_estudiante
 AS
@@ -9,7 +9,6 @@ IS
     PROCEDURE get_all_temas_estudiante(
         cursorTemaEstudiante OUT t_cursor);
     PROCEDURE insertar_tema_estudiante(
-        rel_tema_est_id  NUMBER,
         estudiante_id       NUMBER,
         tema_id       NUMBER,
         materia_id       NUMBER,
@@ -38,7 +37,6 @@ AS
   END get_all_temas_estudiante;
 --------------------
   PROCEDURE insertar_tema_estudiante(
-      rel_tema_est_id  NUMBER,
         estudiante_id       NUMBER,
         tema_id       NUMBER,
         materia_id       NUMBER,
@@ -57,7 +55,7 @@ AS
       )
       VALUES
       (
-        rel_tema_est_id  ,
+        Tema_estudiante_id_Seq.NEXTVAL ,
         estudiante_id       ,
         tema_id       ,
         materia_id       ,
