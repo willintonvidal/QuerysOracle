@@ -27,7 +27,7 @@ is
 begin
  open cursor_materias for 
    
-   	select mate.mat_nombre
+   	select mate.mat_nombre, mate.mat_id
 	from (select m.mat_id
 	from materia m inner join grado gra on (m.GRA_ID=gra.GRA_ID) 
 	where gra.gra_id=
