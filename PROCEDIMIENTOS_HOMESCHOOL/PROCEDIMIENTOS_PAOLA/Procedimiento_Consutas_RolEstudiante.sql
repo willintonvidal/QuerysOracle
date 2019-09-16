@@ -9,6 +9,8 @@ type tc_temasMateria is ref cursor;
 type tc_materialEstudio is ref cursor;
 type tc_actividades is ref cursor;
 type tc_materialEstTema is ref cursor;
+type tc_materiaId is ref cursor;
+
 procedure mostrarMate_a_matri(id_est NUMBER,cursor_materias out tc_materia);
 procedure mostrarProfesor_por_materia(nombre_materia varchar2,cursor_profesores out tc_profesor);
 procedure mostrarNombre_centro_educativo(cursor_nombre_centro out tc_centroEdu);
@@ -18,6 +20,8 @@ procedure mostrarTemas_de_materia(nombre_materia varchar2,cursor_temasMateria ou
 procedure mostrarMaterial_de_estudio(nombre_materia varchar2,cursor_materialEstudio out tc_materialEstudio);
 procedure mostrarActividades_del_tema(nombre_tema varchar2,cursor_actividades out tc_actividades);
 procedure mostrarMaterial_e_tema(nombre_tema varchar2,cursor_materialEstTema out tc_materialEstTema);
+procedure mostrarIdMateria(nombre_materia varchar2,cursor_IdMateria out tc_materiaId);
+
 end GestionarRolEstudiante;
 
 create or replace package body GestionarRolEstudiante as
@@ -72,7 +76,7 @@ procedure mostrarMaterias_estudiate(id_est NUMBER,cursor_mateEstudiate out tc_ma
 is
 begin
  open cursor_mateEstudiate for 
-   select mt.mat_nombre
+   select mt.mat_nombre, m.mat_id
    from estudiante e inner join matricula m on (e.est_id=m.est_id) inner join materia mt on (m.mat_id=mt.mat_id)
    where e.est_id= id_est
    order by mt.mat_nombre asc;
@@ -119,6 +123,14 @@ open cursor_materialEstTema for
 	where t.TEM_NOMBRE=nombre_tema;
 
 end mostrarMaterial_e_tema;
+
+procedure mostrarIdMateria(nombre_materia varchar2,cursor_IdMateria out tc_materiaId)
+is BEGIN
+OPEN cursor_IdMateria for 
+	select MAT_ID
+	from MATERIA
+	where MAT_NOMBRE=nombre_materia;
+end mostrarIdMateria;
 
 end GestionarRolEstudiante;
 
