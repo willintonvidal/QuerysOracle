@@ -1,9 +1,8 @@
 create or replace
 package GestionarMatricula as
 type t_cursor is ref cursor;
-procedure mostrarMatricula(cursorMateria out t_cursor);
-procedure insertarMatricula(id_matri number, id_est number, id_mat number,
-fecha_inicio_matri date,fecha_fin_matri date, estado_matri varchar2, not_final_matri number, ejecuto out number);
+procedure mostrarMatricula(cursorMatricula out t_cursor);
+procedure insertarMatricula(id_est number, id_mat number,fecha_fin_matri date, estado_matri varchar2, not_final_matri number, ejecuto out number);
 procedure actualizarMatricula(id_matri number, id_est number, id_mat number,
 fecha_inicio_matri date,fecha_fin_matri date, estado_matri varchar2, not_final_matri number, ejecuto out number);
 procedure eliminarMatricula(id_matri number, ejecuto out number);
@@ -12,20 +11,19 @@ end GestionarMatricula;
 create or replace
 package body GestionarMatricula as
 
-procedure mostrarMatricula(cursorMateria out t_cursor)
+procedure mostrarMatricula(cursorMatricula out t_cursor)
 is
 begin
- open cursorMateria for select matri_id, est_id, mat_id,
+ open cursorMatricula for select matri_id, est_id, mat_id,
 matri_fecha_inicio, matri_fecha_fin, matri_estado, matri_not_final from matricula;
 end mostrarMatricula;
 
 
-procedure insertarMatricula(id_matri number, id_est number, id_mat number,
-fecha_inicio_matri date,fecha_fin_matri date, estado_matri varchar2, not_final_matri number, ejecuto out number)
+procedure insertarMatricula(id_est number, id_mat number,fecha_fin_matri date, estado_matri varchar2, not_final_matri number, ejecuto out number)
 is
 begin
  insert into matricula(matri_id, est_id, mat_id, matri_fecha_inicio, matri_fecha_fin, matri_estado, matri_not_final)
- values(id_matri, id_est, id_mat, fecha_inicio_matri, fecha_fin_matri, estado_matri, not_final_matri);
+ values(Matri_id_Seq.NEXTVAL, id_est, id_mat, SYSDATE, fecha_fin_matri, estado_matri, not_final_matri);
 
  if sql%rowcount > 0 then
  ejecuto := 1;

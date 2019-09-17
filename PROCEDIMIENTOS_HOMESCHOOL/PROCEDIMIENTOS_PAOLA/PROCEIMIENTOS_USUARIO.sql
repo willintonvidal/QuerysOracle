@@ -38,7 +38,6 @@ PROCEDURE validarUsuarios(
       
     PROCEDURE actualizarUsuario(
         id_usu NUMBER,
-        edu_nit_cen VARCHAR2,
         tipo_documento_usu VARCHAR2,
         nombres_usu VARCHAR2,
         apellidos_usu VARCHAR2,
@@ -90,7 +89,7 @@ PROCEDURE inicioSesion(
   BEGIN
     contra_cifrada := UTL_RAW.CAST_TO_VARCHAR2(UTL_RAW.CAST_TO_RAW( QB_ENCRIPCION.FB_ENCRIPTAR(usuario_contrasenia)));
     
-    OPEN cursorInicioSesion FOR SELECT USU_ID,USU_NOMBRES,USU_APELLIDOS,USU_TIPO_USUARIO,USU_ESTADO,USU_EMAIL,USU_TELEFONO,USU_FOTO
+    OPEN cursorInicioSesion FOR SELECT USU_ID,USU_NOMBRES,USU_APELLIDOS,USU_TIPO_USUARIO,USU_ESTADO,USU_EMAIL,USU_TELEFONO,USU_FOTO,USU_TIPO_DOCUMENTO
         FROM USUARIO WHERE USU_ID = usuario_id AND USU_CONTRASENIA = contra_cifrada;
     EXCEPTION
     WHEN NO_DATA_FOUND THEN
@@ -200,7 +199,6 @@ PROCEDURE inicioSesion(
   PROCEDURE actualizarUsuario
     (
         id_usu NUMBER,
-        edu_nit_cen VARCHAR2,
         tipo_documento_usu VARCHAR2,
         nombres_usu VARCHAR2,
         apellidos_usu VARCHAR2,
@@ -213,7 +211,7 @@ PROCEDURE inicioSesion(
   IS
   BEGIN
     UPDATE usuario
-    SET cen_edu_nit = edu_nit_cen,
+    SET 
       usu_tipo_documento = tipo_documento_usu,
       usu_nombres      = nombres_usu,
       usu_apellidos = apellidos_usu,
