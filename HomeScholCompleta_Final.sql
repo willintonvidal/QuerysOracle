@@ -315,7 +315,7 @@ create table TEMAS
 (
    TEM_ID               NUMBER(30)           not null,
    MAT_ID               NUMBER(30)           not null,
-   TEM_NOMBRE           VARCHAR2(30)         not null,
+   TEM_NOMBRE           VARCHAR2(100)         not null,
    TEM_DESCRIPCION      VARCHAR2(500),
    TEM_FOTO             VARCHAR2(50),
    TEM_MATERIAL_ARCHIVO VARCHAR2(100),
