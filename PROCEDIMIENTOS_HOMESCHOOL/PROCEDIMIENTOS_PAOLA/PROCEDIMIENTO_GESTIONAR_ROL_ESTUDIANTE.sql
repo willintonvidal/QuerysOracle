@@ -18,8 +18,8 @@ procedure mostrarNombreGrado (cursor_nombre_grado out tc_grado);
 procedure mostrarMaterias_estudiate(id_est NUMBER,cursor_mateEstudiate out tc_mateEstudiate);
 procedure mostrarTemas_de_materia(nombre_materia varchar2,cursor_temasMateria out tc_temasMateria);
 procedure mostrarMaterial_de_estudio(nombre_materia varchar2,cursor_materialEstudio out tc_materialEstudio);
-procedure mostrarActividades_del_tema(nombre_tema varchar2,cursor_actividades out tc_actividades);
-procedure mostrarMaterial_e_tema(nombre_tema varchar2,cursor_materialEstTema out tc_materialEstTema);
+procedure mostrarActividades_del_tema(id_tema NUMBER,cursor_actividades out tc_actividades);
+procedure mostrarMaterial_e_tema(id_tema NUMBER,cursor_materialEstTema out tc_materialEstTema);
 procedure mostrarIdMateria(nombre_materia varchar2,cursor_IdMateria out tc_materiaId);
 
 end GestionarRolEstudiante;
@@ -105,22 +105,22 @@ begin
 end mostrarMaterial_de_estudio;
 
 
-procedure mostrarActividades_del_tema(nombre_tema varchar2,cursor_actividades out tc_actividades)
+procedure mostrarActividades_del_tema(id_tema NUMBER,cursor_actividades out tc_actividades)
 is
 begin
  open cursor_actividades for 
-	select a.ACT_EVA_NOMBRE
+	select a.ACT_EVA_NOMBRE, a.ACT_EVA_ID
 	from ACTIVIDAD_EVALUATIVA a
-	where a.TEM_ID=(select TEM_ID from TEMAS where TEM_NOMBRE=nombre_tema );
+	where a.TEM_ID=(select TEM_ID from TEMAS where TEM_ID=id_tema );
 end mostrarActividades_del_tema;
 
-procedure mostrarMaterial_e_tema(nombre_tema varchar2,cursor_materialEstTema out tc_materialEstTema)
+procedure mostrarMaterial_e_tema(id_tema number,cursor_materialEstTema out tc_materialEstTema)
 is 
 begin
 open cursor_materialEstTema for
-    select t.TEM_NOMBRE, t.TEM_DESCRIPCION, t.TEM_MATERIAL_ARCHIVO, t.TEM_MATERIAL_VIDEO
+    select t.tem_id, t.TEM_NOMBRE, t.TEM_DESCRIPCION, t.TEM_MATERIAL_ARCHIVO, t.TEM_MATERIAL_VIDEO
 	from temas t
-	where t.TEM_NOMBRE=nombre_tema;
+	where t.TEM_ID=id_tema;
 
 end mostrarMaterial_e_tema;
 
