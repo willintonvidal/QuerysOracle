@@ -3,8 +3,7 @@ package GestionarMatricula as
 type t_cursor is ref cursor;
 procedure mostrarMatricula(cursorMatricula out t_cursor);
 procedure insertarMatricula(id_est number, id_mat number,fecha_fin_matri date, estado_matri varchar2, not_final_matri number, ejecuto out number);
-procedure actualizarMatricula(id_matri number, id_est number, id_mat number,
-fecha_inicio_matri date,fecha_fin_matri date, estado_matri varchar2, not_final_matri number, ejecuto out number);
+procedure actualizarMatricula(id_matri number, id_est number, id_mat number,estado_matri varchar2, not_final_matri number, ejecuto out number);
 procedure eliminarMatricula(id_matri number, ejecuto out number);
 end GestionarMatricula;
 
@@ -38,10 +37,10 @@ end insertarMatricula;
 
 
 procedure actualizarMatricula(id_matri number, id_est number, id_mat number,
-fecha_inicio_matri date,fecha_fin_matri date, estado_matri varchar2, not_final_matri number, ejecuto out number)
+estado_matri varchar2, not_final_matri number, ejecuto out number)
 is
 begin
- update matricula set est_id = id_est, mat_id = id_mat, matri_fecha_inicio=fecha_inicio_matri, matri_fecha_fin=fecha_fin_matri,
+ update matricula set est_id = id_est, mat_id = id_mat,  matri_fecha_fin=sysdate,
  matri_estado=estado_matri, matri_not_final=not_final_matri where matri_id = id_matri;
  if sql%rowcount > 0 then
  ejecuto := 1;
