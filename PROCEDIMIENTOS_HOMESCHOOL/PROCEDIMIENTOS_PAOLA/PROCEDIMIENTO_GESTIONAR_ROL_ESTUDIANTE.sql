@@ -10,6 +10,9 @@ type tc_materialEstudio is ref cursor;
 type tc_actividades is ref cursor;
 type tc_materialEstTema is ref cursor;
 type tc_materiaId is ref cursor;
+type tc_infoEstProfe is ref cursor;
+type tc_infoEst1Profe is ref cursor;
+
 
 procedure mostrarMate_a_matri(id_est NUMBER,cursor_materias out tc_materia);
 procedure mostrarProfesor_por_materia(nombre_materia varchar2,cursor_profesores out tc_profesor);
@@ -21,6 +24,8 @@ procedure mostrarMaterial_de_estudio(nombre_materia varchar2,cursor_materialEstu
 procedure mostrarActividades_del_tema(id_tema NUMBER,cursor_actividades out tc_actividades);
 procedure mostrarMaterial_e_tema(id_tema NUMBER,cursor_materialEstTema out tc_materialEstTema);
 procedure mostrarIdMateria(nombre_materia varchar2,cursor_IdMateria out tc_materiaId);
+procedure mostrarNotaMateria_est(id_profesor NUMBER,cursor_nota_mat out tc_infoEstProfe);
+procedure mostrarNotaTema_est(id_profesor NUMBER,cursor_not_tem out tc_infoEst1Profe);
 
 end GestionarRolEstudiante;
 
@@ -131,5 +136,23 @@ OPEN cursor_IdMateria for
 	from MATERIA
 	where MAT_NOMBRE=nombre_materia;
 end mostrarIdMateria;
+
+procedure mostrarNotaMateria_est(id_profesor NUMBER,cursor_nota_mat out tc_infoEstProfe)
+is BEGIN
+OPEN cursor_nota_mat for 
+select u.USU_TIPO_DOCUMENTO, u.USU_ID, u.USU_NOMBRES, u.USU_APELLIDOS, mat.MAT_NOMBRE, mt.MATRI_NOT_FINAL, mt.MATRI_FECHA_INICIO, mt.MATRI_FECHA_FIN, a.ACU_NOMBRE_COMPLETO
+from usuario u inner join estudiante e on (u.usu_id=e.EST_ID) inner join acudiente a on (e.ACU_NUMERO_IDENTIFICACION=a.ACU_NUMERO_IDENTIFICACION)inner join matricula mt on (mt.EST_ID=e.EST_ID) inner join materia mat on (mat.MAT_ID=mt.MAT_ID) inner join profesor p on (p.PROF_ID=mat.PROF_ID)
+where p.PROF_ID=id_profesor;
+
+end mostrarNotaMateria_est;
+
+procedure mostrarNotaTema_est(id_profesor NUMBER,cursor_not_tem out tc_infoEst1Profe)
+is BEGIN
+OPEN cursor_not_tem for 
+select u.USU_TIPO_DOCUMENTO, u.USU_ID, u.USU_NOMBRES, u.USU_APELLIDOS, mat.MAT_NOMBRE, mt.MATRI_NOT_FINAL, mt.MATRI_FECHA_INICIO, mt.MATRI_FECHA_FIN, te.tem_nombre, tes.REL_TEM_NOTA,  a.ACU_NOMBRE_COMPLETO
+from usuario u inner join estudiante e on (u.usu_id=e.EST_ID) inner join acudiente a on (e.ACU_NUMERO_IDENTIFICACION=a.ACU_NUMERO_IDENTIFICACION)inner join matricula mt on (mt.EST_ID=e.EST_ID) inner join materia mat on (mat.MAT_ID=mt.MAT_ID) inner join profesor p on (p.PROF_ID=mat.PROF_ID) inner join temas te on (mat.MAT_ID=te.MAT_ID) inner join TEMA_ESTUDIANTE tes on (te.TEM_ID= tes.TEM_ID)
+where p.PROF_ID=id_profesor;
+
+end mostrarNotaTema_est;
 
 end GestionarRolEstudiante;
