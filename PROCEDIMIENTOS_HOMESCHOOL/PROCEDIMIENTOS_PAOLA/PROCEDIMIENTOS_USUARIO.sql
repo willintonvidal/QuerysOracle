@@ -2,10 +2,20 @@ CREATE OR REPLACE PACKAGE GestionarUsuario
 AS type t_cursorUsuario IS ref CURSOR;
    type t_cursorIniciosesion IS ref CURSOR;
    type t_cursorUsuariosNo IS ref CURSOR;
+   type t_cursor_datos_envio_contra IS ref CURSOR;
+   type t_cursor_datos_pass IS ref CURSOR;
    
     PROCEDURE mostrarUsuario(
         cursorUsuario OUT t_cursorUsuario);
         
+    PROCEDURE datospass(
+         usuario_id NUMBER,
+        cursorDatospass OUT t_cursor_datos_pass);
+
+    PROCEDURE datos_envio_contrasenia(
+            usuario_id NUMBER,
+            cursorDatos_envio_ OUT t_cursor_datos_envio_contra);
+            
     PROCEDURE usuariosNoValidados(
         cursorUsuarioNoValid OUT t_cursorUsuariosNo);
         
@@ -79,6 +89,23 @@ PROCEDURE usuariosNoValidados(
   BEGIN
     OPEN cursorUsuarioNoValid FOR SELECT * FROM USUARIO WHERE USU_ESTADO != 'VALIDADO';
   END usuariosNoValidados;
+  
+  ----------------------------
+  -----------Mostrar datos pass------------------
+  
+  PROCEDURE datospass(
+         usuario_id NUMBER,
+        cursorDatospass OUT t_cursor_datos_pass)
+  IS
+  BEGIN
+    OPEN  cursorDatospass FOR SELECT USU_NOMBRES,USU_EMAIL,QB_ENCRIPCION.FB_DESCENCRIPTAR(USU_CONTRASENIA) 
+    FROM usuario WHERE USU_ID = usuario_id;
+  END datospass;
+
+  
+  
+  -------------------------------------------------------------------------------
+  ----------------------------------------------------
 
 PROCEDURE inicioSesion(
      usuario_id NUMBER,
@@ -95,7 +122,27 @@ PROCEDURE inicioSesion(
     WHEN NO_DATA_FOUND THEN
     cursorInicioSesion := null;
   END inicioSesion;
-  
+
+----------------------------------------
+----------envio contraseña--------------
+----------------------------------------
+PROCEDURE datos_envio_contrasenia(
+            usuario_id NUMBER,
+            cursorDatos_envio_ OUT t_cursor_datos_envio_contra)
+  IS
+  contra_cifrada varchar(2000);
+  BEGIN
+    --contra_cifrada := UTL_RAW.CAST_TO_VARCHAR2(UTL_RAW.CAST_TO_RAW( QB_ENCRIPCION.FB_ENCRIPTAR(usuario_contrasenia)));
+    
+    OPEN cursorDatos_envio_ FOR SELECT USU_ID,USU_NOMBRES,USU_APELLIDOS,USU_EMAIL,USU_CONTRASENIA
+        FROM USUARIO WHERE USU_ID = usuario_id;
+    EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+    cursorDatos_envio_ := null;
+  END datos_envio_contrasenia;
+----------------------------------------
+----------envio contraseña--------------
+----------------------------------------
   
   PROCEDURE validarUsuarios(
         usuario_id NUMBER,
