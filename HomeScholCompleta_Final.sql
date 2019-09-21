@@ -370,7 +370,7 @@ create table USUARIO
    USU_NOMBRES          VARCHAR2(30)         not null,
    USU_APELLIDOS        VARCHAR2(30)         not null,
    USU_TIPO_USUARIO     VARCHAR2(30)         not null,
-   USU_CONTRASENIA      VARCHAR2(30)         not null,
+   USU_CONTRASENIA      VARCHAR2(1000)         not null,
    USU_ESTADO           VARCHAR2(30),
    USU_EMAIL            VARCHAR2(40),
    USU_TELEFONO         VARCHAR2(20),
