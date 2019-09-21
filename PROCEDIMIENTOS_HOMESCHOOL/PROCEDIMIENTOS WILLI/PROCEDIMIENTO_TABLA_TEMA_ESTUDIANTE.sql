@@ -52,7 +52,7 @@ IS
   
   BEGIN
           select count(*) into COUNT_TEMAS_MATERIA from temas where mat_id = materia_id;
-          select count(*) into COUNT_TEMAS_ESTUDIANTE_CAL from tema_estudiante where mat_id= materia_id and EST_ID = estudiante_id;
+          select count(*) from (select distinct tem_id from tema_estudiante where mat_id = materia_id and EST_ID = estudiante_id);
           
          IF COUNT_TEMAS_MATERIA = COUNT_TEMAS_ESTUDIANTE_CAL THEN
           select avg(rel_tem_nota) into promedio from tema_estudiante where mat_id = materia_id;
