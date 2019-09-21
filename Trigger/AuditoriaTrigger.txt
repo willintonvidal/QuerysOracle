@@ -1,0 +1,34 @@
+CREATE OR REPLACE TRIGGER AUDITORIA_USUARIO
+BEFORE DELETE ON USUARIO FOR EACH ROW 
+DECLARE 
+ v_username varchar2(30);
+BEGIN
+SELECT user INTO v_username FROM dual;
+
+INSERT INTO AUDITORIA_USUARIO
+    (
+   AUD_ID,            
+   AUD_TIPO_DOCUMENTO,   
+   AUD_NOMBRES,          
+   AUD_APELLIDOS,        
+   AUD_TIPO_USUARIO,     
+   AUD_EMAIL,                     
+   AUD_TELEFONO ,                 
+   AUD_FECHA ,           
+   AUD_ACCION  ,         
+   AUD_NOMBRE_USUARIO   
+    )
+    VALUES
+    (
+      :OLD.USU_ID,
+      :OLD.USU_TIPO_DOCUMENTO,
+      :OLD.USU_NOMBRES,
+      :OLD.USU_APELLIDOS,
+      :OLD.USU_TIPO_USUARIO,
+      :OLD.USU_EMAIL,
+      :OLD.USU_TELEFONO,
+      SYSDATE,
+      'Se elimino el usuario',
+      v_username
+    );
+END;

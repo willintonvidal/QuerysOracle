@@ -3,6 +3,7 @@
 /* Created on:     22/08/2019 2:14:25 p. m.                     */
 /*==============================================================*/
 
+
 alter table ACTIVIDAD_ESTUDIANTE
    drop constraint FK_ACTIVIDA_ACTIVIDAD_ACTIVIDA;
 
@@ -20,6 +21,9 @@ alter table ESTUDIANTE
 
 alter table ESTUDIANTE
    drop constraint FK_ESTUDIAN_RELATIONS_ACUDIENT;
+
+alter table LOG_USUARIO
+   drop constraint FK_LOG_USUA_GUARDA_USUARIO;
 
 alter table MATERIA
    drop constraint FK_MATERIA_DICTA_PROFESOR;
@@ -72,7 +76,7 @@ drop table GRADO cascade constraints;
 
 drop index GUARDA_FK;
 
-drop table AUDITORIA_USUARIO cascade constraints;
+drop table LOG_USUARIO cascade constraints;
 
 drop index RELATIONSHIP_8_FK;
 
@@ -101,7 +105,6 @@ drop table TEMA_ESTUDIANTE cascade constraints;
 drop index RELATIONSHIP_10_FK;
 
 drop table USUARIO cascade constraints;
-
 
 /*==============================================================*/
 /* Table: ACTIVIDAD_ESTUDIANTE                                  */
@@ -197,6 +200,9 @@ create table ESTUDIANTE
 /*==============================================================*/
 /* Index: RELATIONSHIP_9_FK                                     */
 /*==============================================================*/
+create index RELATIONSHIP_9_FK on ESTUDIANTE (
+   ACU_NUMERO_IDENTIFICACION ASC
+);
 
 /*==============================================================*/
 /* Index: RELATIONSHIP_11_FK                                    */
@@ -216,28 +222,25 @@ create table GRADO
 );
 
 /*==============================================================*/
-/* Table: AUDITORIA_USUARIO                                           */
+/* Table: LOG_USUARIO                                           */
 /*==============================================================*/
-create table AUDITORIA_USUARIO 
+create table LOG_USUARIO 
 (
-   AUD_ID               NUMBER(15)           not null,
-   AUD_TIPO_DOCUMENTO   VARCHAR2(30)         not null,
-   AUD_NOMBRES          VARCHAR2(30)         not null,
-   AUD_APELLIDOS        VARCHAR2(30)         not null,
-   AUD_TIPO_USUARIO     VARCHAR2(30)         not null,
-   AUD_EMAIL            VARCHAR2(40),         
-   AUD_TELEFONO         VARCHAR2(20),         
-   AUD_FECHA            DATE,
-   AUD_ACCION           VARCHAR2(30),
-   AUD_NOMBRE_USUARIO   VARCHAR2(30),
-
-   constraint PK_AUDITORIA primary key (AUD_ID)
+   LOG_ID               NUMBER(10)           not null,
+   LOG_TIPO_DOCUMENTO   VARCHAR2(10)         not null,
+   LOG_NUMERO_DOCUMENTO NUMBER(15)           not null,
+   LOG_FECHA_INICIO     DATE                 not null,
+   LOG_FECHA_FIN        DATE                 not null,
+   USU_ID               NUMBER(15)           not null,
+   constraint PK_LOG_USUARIO primary key (LOG_ID)
 );
-
 
 /*==============================================================*/
 /* Index: GUARDA_FK                                             */
 /*==============================================================*/
+create index GUARDA_FK on LOG_USUARIO (
+   USU_ID ASC
+);
 
 /*==============================================================*/
 /* Table: MATERIA                                               */
@@ -384,19 +387,19 @@ create index RELATIONSHIP_10_FK on USUARIO (
 
 alter table ACTIVIDAD_ESTUDIANTE
    add constraint FK_ACTIVIDA_ACTIVIDAD_ACTIVIDA foreign key (ACT_EVA_ID, TEM_ID, MAT_ID)
-      references ACTIVIDAD_EVALUATIVA (ACT_EVA_ID, TEM_ID, MAT_ID) ON DELETE CASCADE;
+      references ACTIVIDAD_EVALUATIVA (ACT_EVA_ID, TEM_ID, MAT_ID);
 
 alter table ACTIVIDAD_ESTUDIANTE
    add constraint FK_ACTIVIDA_ACTIVIDAD_ESTUDIAN foreign key (EST_ID)
-      references ESTUDIANTE (EST_ID) ON DELETE CASCADE;
+      references ESTUDIANTE (EST_ID);
 
 alter table ACTIVIDAD_EVALUATIVA
    add constraint FK_ACTIVIDA_TIENEN_TEMAS foreign key (TEM_ID, MAT_ID)
-      references TEMAS (TEM_ID, MAT_ID) ON DELETE CASCADE;
+      references TEMAS (TEM_ID, MAT_ID);
 
 alter table ESTUDIANTE
    add constraint FK_ESTUDIAN_ES_UN_USUARIO foreign key (EST_ID)
-      references USUARIO (USU_ID) ON DELETE CASCADE;
+      references USUARIO (USU_ID);
 
 alter table ESTUDIANTE
    add constraint FK_ESTUDIAN_RELATIONS_GRADO foreign key (GRA_ID)
@@ -406,39 +409,43 @@ alter table ESTUDIANTE
    add constraint FK_ESTUDIAN_RELATIONS_ACUDIENT foreign key (ACU_NUMERO_IDENTIFICACION)
       references ACUDIENTE (ACU_NUMERO_IDENTIFICACION);
 
+alter table LOG_USUARIO
+   add constraint FK_LOG_USUA_GUARDA_USUARIO foreign key (USU_ID)
+      references USUARIO (USU_ID);
+
 alter table MATERIA
    add constraint FK_MATERIA_DICTA_PROFESOR foreign key (PROF_ID)
-      references PROFESOR (PROF_ID) ON DELETE CASCADE;
+      references PROFESOR (PROF_ID);
 
 alter table MATERIA
    add constraint FK_MATERIA_RELATIONS_GRADO foreign key (GRA_ID)
-      references GRADO (GRA_ID) ON DELETE CASCADE;
+      references GRADO (GRA_ID);
 
 alter table MATRICULA
    add constraint FK_MATRICUL_MATRICULA_MATERIA foreign key (MAT_ID)
-      references MATERIA (MAT_ID)ON DELETE CASCADE;
+      references MATERIA (MAT_ID);
 
 alter table MATRICULA
    add constraint FK_MATRICUL_MATRICULA_ESTUDIAN foreign key (EST_ID)
-      references ESTUDIANTE (EST_ID) ON DELETE CASCADE;
+      references ESTUDIANTE (EST_ID);
 
 alter table PROFESOR
    add constraint FK_PROFESOR_ES_UN2_USUARIO foreign key (PROF_ID)
-      references USUARIO (USU_ID) ON DELETE CASCADE;
+      references USUARIO (USU_ID);
 
 alter table TEMAS
    add constraint FK_TEMAS_RELATIONS_MATERIA foreign key (MAT_ID)
-      references MATERIA (MAT_ID)ON DELETE CASCADE;
+      references MATERIA (MAT_ID);
 
 alter table TEMA_ESTUDIANTE
    add constraint FK_TEMA_EST_TEMA_ESTU_TEMAS foreign key (TEM_ID, MAT_ID)
-      references TEMAS (TEM_ID, MAT_ID) ON DELETE CASCADE;
+      references TEMAS (TEM_ID, MAT_ID);
 
 alter table TEMA_ESTUDIANTE
    add constraint FK_TEMA_EST_TEMA_ESTU_ESTUDIAN foreign key (EST_ID)
-      references ESTUDIANTE (EST_ID) ON DELETE CASCADE;
+      references ESTUDIANTE (EST_ID);
 
 alter table USUARIO
    add constraint FK_USUARIO_RELATIONS_CENTRO_E foreign key (CEN_EDU_NIT)
       references CENTRO_EDUCATIVO (CEN_EDU_NIT);
-      
+
