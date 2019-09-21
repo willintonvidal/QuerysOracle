@@ -1,5 +1,6 @@
 CREATE OR REPLACE PACKAGE GestionarUsuario
 AS  type t_cursorIniciosesion IS ref CURSOR;
+    
 
     PROCEDURE inicioSesion(
         usuario_id NUMBER,
