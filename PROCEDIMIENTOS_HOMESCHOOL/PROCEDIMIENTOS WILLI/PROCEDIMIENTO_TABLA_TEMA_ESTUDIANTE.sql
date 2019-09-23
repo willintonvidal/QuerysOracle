@@ -56,12 +56,14 @@ IS
           
          IF COUNT_TEMAS_MATERIA = COUNT_TEMAS_ESTUDIANTE_CAL THEN
           select avg(rel_tem_nota) into promedio from tema_estudiante where mat_id = materia_id and EST_ID = estudiante_id;
+          update matricula set MATRI_NOT_FINAL = promedio where MAT_ID = materia_id;
           ELSE
           promedio := 0;
           END IF; 
      
-     
-  
+     EXCEPTION
+  WHEN NO_DATA_FOUND THEN
+    promedio := 0;
   END promedio_tema_for_estudiante;
 
 ----------------------------------------------------------------
