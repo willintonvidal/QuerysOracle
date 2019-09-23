@@ -17,9 +17,9 @@ Insert into USUARIO (USU_ID,CEN_EDU_NIT,USU_TIPO_DOCUMENTO,USU_NOMBRES,USU_APELL
 Insert into USUARIO (USU_ID,CEN_EDU_NIT,USU_TIPO_DOCUMENTO,USU_NOMBRES,USU_APELLIDOS,USU_TIPO_USUARIO,USU_CONTRASENIA,USU_ESTADO,USU_EMAIL,USU_TELEFONO,USU_FOTO) values ('1061776','1065','Tarjeta de identidad','Andres','Mu�oz','Estudiante ','12345','Activo','andres@gmail.com','24353646',null);
 */
 
-Insert into PROFESOR (PROF_ID,PROF_TITULO, PROF_EXPERIENCIA_LABORAL) values ('1061777','Matem�tico Puro', '2 a�os');
-Insert into PROFESOR (PROF_ID,PROF_TITULO, PROF_EXPERIENCIA_LABORAL ) values ('1061778','Ingeniero civil', '1 a�o');
-Insert into PROFESOR (PROF_ID,PROF_TITULO, PROF_EXPERIENCIA_LABORAL) values ('1061779','Licenciada en matem�ticas', '2 a�os');
+Insert into PROFESOR (PROF_ID,PROF_TITULO, PROF_EXPERIENCIA_LABORAL) values ('1061777','Matemático Puro', '2 años');
+Insert into PROFESOR (PROF_ID,PROF_TITULO, PROF_EXPERIENCIA_LABORAL ) values ('1061778','Ingeniero civil', '1 año');
+Insert into PROFESOR (PROF_ID,PROF_TITULO, PROF_EXPERIENCIA_LABORAL) values ('1061779','Licenciada en matemáticas', '2 años');
 
 /*
 Insert into HOMESCHOOL.ACUDIENTE (ACU_TIPO_IDENTIFICACION,ACU_NUMERO_IDENTIFICACION,ACU_NOMBRE_COMPLETO,ACU_EMAIL,ACU_TELEFONO) values ('Cedula','987','Paola Ruiz','paola@gmail.com','21345677788');
@@ -44,9 +44,9 @@ insert into MATRICULA (MATRI_ID,EST_ID,MAT_ID,MATRI_FECHA_INICIO, MATRI_FECHA_FI
 insert into MATRICULA (MATRI_ID,EST_ID,MAT_ID,MATRI_FECHA_INICIO, MATRI_FECHA_FIN,MATRI_ESTADO,MATRI_NOT_FINAL) values (Matri_id_Seq.NEXTVAL,'1061776','1403',SYSDATE,'12-03-2019', 'Activa','5,0');
 */
 
-Insert into TEMAS (TEM_ID,MAT_ID,TEM_NOMBRE,TEM_DESCRIPCION,TEM_FOTO,TEM_MATERIAL_ARCHIVO,TEM_MATERIAL_VIDEO) values ('11334','1403','Lectura y escritura de números','Aprenderemos a sumar conjuntos',null,null,null);
-Insert into TEMAS (TEM_ID,MAT_ID,TEM_NOMBRE,TEM_DESCRIPCION,TEM_FOTO,TEM_MATERIAL_ARCHIVO,TEM_MATERIAL_VIDEO) values ('11337','1403','Diferenciación','Aprenderemos  a sumar fraccionarios',null,null,null);
-Insert into TEMAS (TEM_ID,MAT_ID,TEM_NOMBRE,TEM_DESCRIPCION,TEM_FOTO,TEM_MATERIAL_ARCHIVO,TEM_MATERIAL_VIDEO) values ('11338','1403','Operaciones básicas','Aprenderemos a restar fraccionarios',null,null,null);
+Insert into TEMAS (TEM_ID,MAT_ID,TEM_NOMBRE,TEM_DESCRIPCION,TEM_FOTO,TEM_MATERIAL_ARCHIVO,TEM_MATERIAL_VIDEO) values ('11334','1403','Lectura y escritura de números','Aprenderemos a leer y escribir números',null,null,null);
+Insert into TEMAS (TEM_ID,MAT_ID,TEM_NOMBRE,TEM_DESCRIPCION,TEM_FOTO,TEM_MATERIAL_ARCHIVO,TEM_MATERIAL_VIDEO) values ('11337','1403','Diferenciación','Aprendendiendo a diferenciar números',null,null,null);
+Insert into TEMAS (TEM_ID,MAT_ID,TEM_NOMBRE,TEM_DESCRIPCION,TEM_FOTO,TEM_MATERIAL_ARCHIVO,TEM_MATERIAL_VIDEO) values ('11338','1403','Operaciones básicas','Aprendiendo a sumar, restar y multiplicar números',null,null,null);
 Insert into TEMAS (TEM_ID,MAT_ID,TEM_NOMBRE,TEM_DESCRIPCION,TEM_FOTO,TEM_MATERIAL_ARCHIVO,TEM_MATERIAL_VIDEO) values ('11340','1403','Descomposición','Aprenderemos a descomponer números',null,null,null);
 
 /*
