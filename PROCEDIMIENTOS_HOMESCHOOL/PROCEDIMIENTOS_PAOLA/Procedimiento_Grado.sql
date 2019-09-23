@@ -18,7 +18,7 @@ procedure insertarGrado(id_gra number, nombre_gra varchar2,  ejecuto out number)
 is
 begin
  insert into grado(gra_id, gra_nombre)
- values(id_gra, nombre_gra);
+ values(Grado_id_Seq.NEXTVAL, nombre_gra);
 
  if sql%rowcount > 0 then
  ejecuto := 1;

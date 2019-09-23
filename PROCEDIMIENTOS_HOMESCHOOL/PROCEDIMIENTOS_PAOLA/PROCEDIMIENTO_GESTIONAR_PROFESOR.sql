@@ -19,8 +19,7 @@ package body GestionarProfesor as
 procedure mostrarProfesor(cursorProfesor out t_cursorProfesor)
 is
 begin
- open cursorProfesor for select prof_id, prof_titulo, prof_experiencia_laboral
-from profesor;
+ open cursorProfesor for select pr.PROF_ID,pr.PROF_TITULO,pr.PROF_EXPERIENCIA_LABORAL,us.USU_NOMBRES,us.USU_APELLIDOS from profesor pr inner join usuario us on (pr.PROF_ID = us.USU_ID);
 end mostrarProfesor;
 
 --NUEVO CURSOR QUE DEVUELVE LOS GRADOS AL CUAL ESTA ASIGNADO UN PROFESOR

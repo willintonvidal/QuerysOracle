@@ -7,6 +7,7 @@ id_prof number, ejecuto out number);
 procedure actualizarMateria(id_mat number, nombre_mat varchar2, id_gra number,
 id_prof number, ejecuto out number);
 procedure eliminarMateria(id_mat number, ejecuto out number);
+
 end GestionarMateria;
 
 create or replace
@@ -18,13 +19,13 @@ begin
  prof_id from materia;
 end mostrarMateria;
 
-
+--Insertar materia
 procedure insertarMateria(id_mat number, nombre_mat varchar2, id_gra number,
 id_prof number, ejecuto out number)
 is
 begin
  insert into materia(mat_id, mat_nombre, gra_id, prof_id)
- values(id_mat, nombre_mat, id_gra, id_prof);
+ values(Materia_id_Seq.NEXTVAL, nombre_mat, id_gra, id_prof);
 
  if sql%rowcount > 0 then
  ejecuto := 1;
