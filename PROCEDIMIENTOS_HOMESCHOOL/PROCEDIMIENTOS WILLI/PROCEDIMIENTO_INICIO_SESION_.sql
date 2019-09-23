@@ -172,10 +172,3 @@ PROCEDURE inicioSesion(
   
 END GestionarUsuario;
 
-
-DECLARE
-V varchar2(20);
-BEGIN
-  GESTIONARUSUARIO.BUSCARPOREMAIL('carmela@gmail.com',V);
-  DBMS_OUTPUT.PUT_LINE(V);
-END;
